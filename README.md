@@ -44,12 +44,18 @@ the repeated u v pairs will be ignored
 ```
 1
 2 1
-0
+0 1
 ```
 
 #### Output
 
 For each test t the program will print the index of the person of the graph which meets the requirement, in the case of no nodes or more than one node fulfilling the condition the output will be -1
+
+##### Example
+
+```
+1
+```
 
 ## Execution of the program
 
