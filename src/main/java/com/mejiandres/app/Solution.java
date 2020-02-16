@@ -20,22 +20,22 @@ public class Solution {
 	/**
 	 * Class that models a group of people and the relationships between them in terms of
 	 * a knows b as a Graph implemented as a List of adjacency. Every node a in the graph
-	 * will have a list of people they know
+	 * will have a list of people they know with no repeated relationships
 	 * @author Andrés Felipe Mejía
 	 *
 	 */
     public static class Graph {
     	
-    	LinkedList<Integer> graph[];
+    	private Set<Integer> graph[];
         
         /**
          * Construct the graph with the number of people on the group
          * @param size
          */
         public Graph(int size) {
-            graph = new LinkedList[size];
+            graph = new HashSet[size];
             for(int i=0 ; i<size; i++) {
-            	graph[i] = new LinkedList<Integer>();
+            	graph[i] = new HashSet<Integer>();
             }
         }
 
@@ -66,7 +66,7 @@ public class Solution {
         public int numEdges() {
         	if(graph == null) return 0;
         	int edges = 0;
-        	for(LinkedList<Integer> list: graph) {
+        	for(Set<Integer> list: graph) {
         		edges += list.size();
         	}
         	return edges;
@@ -78,8 +78,39 @@ public class Solution {
          * 
          * @return the index of the node that complies the requirement of celebrity
          */
-        public int findCelebrity() { 
-            return -1;
+        public int findCelebrity() {
+        	
+        	// auxiliary array to count total of people that knows the person
+        	// read as fans[i] is the number of people that know i
+        	int[] fans = new int[graph.length];
+        	
+        	// auxiliary list of potential celebrities
+        	LinkedList<Integer> queue = new LinkedList<Integer>();
+        	
+        	
+        	for(Set<Integer> list : graph) {
+        		for(int i : list) {
+        			fans[i]++;
+        		}
+        	}
+        	
+        	
+        	for(int i=0; i<fans.length; i++) {
+        		if(fans[i] == numVertex() -1 && graph[i].isEmpty()) {
+        			queue.add(i);
+        		}
+        	}
+        	
+        	return queue.size() == 1 ? queue.poll() : -1;
+        }
+        
+        @Override
+        public String toString() {
+        	StringBuilder sb = new StringBuilder();
+        	for(int i=0; i<graph.length; i++) {
+        		sb.append(i + " => " + graph[i] + "\n");
+        	}
+        	return sb.toString();
         }
     }
     

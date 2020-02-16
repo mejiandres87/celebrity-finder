@@ -48,5 +48,15 @@ public class GraphTest {
 		
 		assertEquals(0, g.numEdges());
 	}
+	
+	@Test
+	public void shouldIgnoreExistingRelationships() {
+		Graph g = new Graph(2);
+		
+		g.addEdge(0, 1);
+		g.addEdge(0, 1);
+		
+		assertEquals(1, g.numEdges());
+	}
 
 }
